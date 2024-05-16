@@ -38,8 +38,8 @@ module "dev" {
   bastion_volume_size   = var.bastion_volume_size
 
   # Private EC2
-  Private_EC2_ami           = var.Private_EC2_ami
-  Private_EC2_instance_type = var.Private_EC2_instance_type
-  Private_EC2_key_name      = var.Private_EC2_key_name
-  Private_EC2_volume_size   = var.Private_EC2_volume_size
+  private_ec2_ami           = var.private_ec2_ami
+  private_ec2_instance_type = var.private_ec2_instance_type
+  private_ec2_key_name      = var.private_ec2_key_name
+  private_ec2_volume_size   = var.private_ec2_volume_size
 }

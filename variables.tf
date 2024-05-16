@@ -16,7 +16,7 @@ variable "bastion_key_name" {}
 variable "bastion_volume_size" {}
 
 # Private EC2
-variable "Private_EC2_ami" {}
-variable "Private_EC2_instance_type" {}
-variable "Private_EC2_key_name" {}
-variable "Private_EC2_volume_size" {}
+variable "private_ec2_ami" {}
+variable "private_ec2_instance_type" {}
+variable "private_ec2_key_name" {}
+variable "private_ec2_volume_size" {}
