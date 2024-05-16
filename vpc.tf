@@ -29,6 +29,7 @@ resource "aws_nat_gateway" "nat_gateway" {
   }
 }
 
+# NAT Gateway Eip
 resource "aws_eip" "nat_gateway" {
   depends_on = [aws_internet_gateway.igw]
 
@@ -137,6 +138,7 @@ resource "aws_route" "private1" {
   nat_gateway_id         = aws_nat_gateway.nat_gateway.id
   destination_cidr_block = "0.0.0.0/0"
 }
+
 
 # NACL
 ## public1~2
