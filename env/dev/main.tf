@@ -30,4 +30,16 @@ module "dev" {
   cidr_public2 = var.cidr_public2
   cidr_private1 = var.cidr_private1
   cidr_private2 = var.cidr_private2
+
+  # Public EC2
+  bastion_ami           = var.bastion_ami
+  bastion_instance_type = var.bastion_instance_type
+  bastion_key_name      = var.bastion_key_name
+  bastion_volume_size   = var.bastion_volume_size
+
+  # Private EC2
+  Private_EC2_ami           = var.Private_EC2_ami
+  Private_EC2_instance_type = var.Private_EC2_instance_type
+  Private_EC2_key_name      = var.Private_EC2_key_name
+  Private_EC2_volume_size   = var.Private_EC2_volume_size
 }
