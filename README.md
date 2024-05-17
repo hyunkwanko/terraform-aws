@@ -3,6 +3,8 @@
 K8s Cluster 구축
 - AWS Infra Provisioning (Terraform)
 
+![architecture_2](https://github.com/hyunkwanko/terraform-aws/assets/39941580/271061f8-d948-419b-9b52-4eed68cf6877)
+
 ```
 # 기본 명령어
 * terraform init
