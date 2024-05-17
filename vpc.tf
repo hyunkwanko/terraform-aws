@@ -1,198 +1,198 @@
 # VPC
 resource "aws_vpc" "vpc" {
-  cidr_block           = "${var.cidr_vpc}"
-  enable_dns_support   = true
-  enable_dns_hostnames = true
+    cidr_block           = "${var.cidr_vpc}"
+    enable_dns_support   = true
+    enable_dns_hostnames = true
 
-  tags = {
-    Name = "${var.project_name}-${var.environment}-vpc"
-  }
+    tags = {
+        Name = "${var.project_name}-${var.environment}-vpc"
+    }
 }
 
 # Internet Gateway
 resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.vpc.id
+    vpc_id = aws_vpc.vpc.id
 
-  tags = {
-    Name = "${var.project_name}-${var.environment}-igw"
-  }
+    tags = {
+        Name = "${var.project_name}-${var.environment}-igw"
+    }
 }
 
 # NAT Gateway
 resource "aws_nat_gateway" "nat_gateway" {
-  allocation_id = aws_eip.nat_gateway.id
-  subnet_id     = aws_subnet.public1.id
-  depends_on    = [aws_internet_gateway.igw]
+    allocation_id = aws_eip.nat_gateway.id
+    subnet_id     = aws_subnet.public1.id
+    depends_on    = [aws_internet_gateway.igw]
 
-  tags = {
-    Name = "${var.project_name}-${var.environment}-natgw1"
-  }
+    tags = {
+        Name = "${var.project_name}-${var.environment}-natgw1"
+    }
 }
 
 # NAT Gateway Eip
 resource "aws_eip" "nat_gateway" {
-  depends_on = [aws_internet_gateway.igw]
+    depends_on = [aws_internet_gateway.igw]
 
-  tags = {
-    Name = "${var.project_name}-${var.environment}-natgw1-eip"
-  }
+    tags = {
+        Name = "${var.project_name}-${var.environment}-natgw1-eip"
+    }
 }
 
 # Subnet
 ## public1-subnet
 resource "aws_subnet" "public1" {
-  vpc_id                  = aws_vpc.vpc.id
-  availability_zone       = "ap-northeast-2a"
-  cidr_block              = "${var.cidr_public1}"
-  map_public_ip_on_launch = true
+    vpc_id                  = aws_vpc.vpc.id
+    availability_zone       = "ap-northeast-2a"
+    cidr_block              = "${var.cidr_public1}"
+    map_public_ip_on_launch = true
 
-  tags = {
-    Name = "${var.project_name}-${var.environment}-public1-subnet"
-  }
+    tags = {
+        Name = "${var.project_name}-${var.environment}-public1-subnet"
+    }
 }
 
 ## public2-subnet
 resource "aws_subnet" "public2" {
-  vpc_id                  = aws_vpc.vpc.id
-  availability_zone       = "ap-northeast-2b"
-  cidr_block              = "${var.cidr_public2}"
-  map_public_ip_on_launch = true
+    vpc_id                  = aws_vpc.vpc.id
+    availability_zone       = "ap-northeast-2b"
+    cidr_block              = "${var.cidr_public2}"
+    map_public_ip_on_launch = true
 
-  tags = {
-    Name = "${var.project_name}-${var.environment}-public2-subnet"
-  }
+    tags = {
+        Name = "${var.project_name}-${var.environment}-public2-subnet"
+    }
 }
 
 ## private1-subnet
 resource "aws_subnet" "private1" {
-  vpc_id                  = aws_vpc.vpc.id
-  availability_zone       = "ap-northeast-2a"
-  cidr_block              = "${var.cidr_private1}"
-  map_public_ip_on_launch = false
+    vpc_id                  = aws_vpc.vpc.id
+    availability_zone       = "ap-northeast-2a"
+    cidr_block              = "${var.cidr_private1}"
+    map_public_ip_on_launch = false
 
-  tags = {
-    Name = "${var.project_name}-${var.environment}-private1-subnet"
-  }
+    tags = {
+        Name = "${var.project_name}-${var.environment}-private1-subnet"
+    }
 }
 
 ## private2-subnet
 resource "aws_subnet" "private2" {
-  vpc_id                  = aws_vpc.vpc.id
-  availability_zone       = "ap-northeast-2b"
-  cidr_block              = "${var.cidr_private2}"
-  map_public_ip_on_launch = false
+    vpc_id                  = aws_vpc.vpc.id
+    availability_zone       = "ap-northeast-2b"
+    cidr_block              = "${var.cidr_private2}"
+    map_public_ip_on_launch = false
 
-  tags = {
-    Name = "${var.project_name}-${var.environment}-private2-subnet"
-  }
+    tags = {
+        Name = "${var.project_name}-${var.environment}-private2-subnet"
+    }
 }
 
 
 # Route table
 ## public1~2
 resource "aws_route_table" "public1" {
-  vpc_id = aws_vpc.vpc.id
+    vpc_id = aws_vpc.vpc.id
 
-  tags = {
-    Name = "${var.project_name}-${var.environment}-public1-rtb"
-  }
+    tags = {
+        Name = "${var.project_name}-${var.environment}-public1-rtb"
+    }
 }
 
 resource "aws_route_table_association" "public1" {
-  subnet_id      = aws_subnet.public1.id
-  route_table_id = aws_route_table.public1.id
+    subnet_id      = aws_subnet.public1.id
+    route_table_id = aws_route_table.public1.id
 }
 
 resource "aws_route_table_association" "public2" {
-  subnet_id      = aws_subnet.public2.id
-  route_table_id = aws_route_table.public1.id
+    subnet_id      = aws_subnet.public2.id
+    route_table_id = aws_route_table.public1.id
 }
 
 resource "aws_route" "public1" {
-  route_table_id         = aws_route_table.public1.id
-  gateway_id             = aws_internet_gateway.igw.id
-  destination_cidr_block = "0.0.0.0/0"
+    route_table_id         = aws_route_table.public1.id
+    gateway_id             = aws_internet_gateway.igw.id
+    destination_cidr_block = "0.0.0.0/0"
 }
 
 ## private1~2
 resource "aws_route_table" "private1" {
-  vpc_id = aws_vpc.vpc.id
+    vpc_id = aws_vpc.vpc.id
 
-  tags = {
-    Name = "${var.project_name}-${var.environment}-private1-rtb"
-  }
+    tags = {
+        Name = "${var.project_name}-${var.environment}-private1-rtb"
+    }
 }
 
 resource "aws_route_table_association" "private1" {
-  subnet_id      = aws_subnet.private1.id
-  route_table_id = aws_route_table.private1.id
+    subnet_id      = aws_subnet.private1.id
+    route_table_id = aws_route_table.private1.id
 }
 
 resource "aws_route_table_association" "private2" {
-  subnet_id      = aws_subnet.private2.id
-  route_table_id = aws_route_table.private1.id
+    subnet_id      = aws_subnet.private2.id
+    route_table_id = aws_route_table.private1.id
 }
 
 resource "aws_route" "private1" {
-  route_table_id         = aws_route_table.private1.id
-  nat_gateway_id         = aws_nat_gateway.nat_gateway.id
-  destination_cidr_block = "0.0.0.0/0"
+    route_table_id         = aws_route_table.private1.id
+    nat_gateway_id         = aws_nat_gateway.nat_gateway.id
+    destination_cidr_block = "0.0.0.0/0"
 }
 
 
 # NACL
 ## public1~2
 resource "aws_network_acl" "public1" {
-  vpc_id     = aws_vpc.vpc.id
-  subnet_ids = [aws_subnet.public1.id, aws_subnet.public2.id]
+    vpc_id     = aws_vpc.vpc.id
+    subnet_ids = [aws_subnet.public1.id, aws_subnet.public2.id]
 
-  egress {
-    protocol   = -1
-    rule_no    = 100
-    action     = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port  = 0
-    to_port    = 0
-  }
+    egress {
+        protocol   = -1
+        rule_no    = 100
+        action     = "allow"
+        cidr_block = "0.0.0.0/0"
+        from_port  = 0
+        to_port    = 0
+    }
 
-  ingress {
-    protocol   = -1
-    rule_no    = 100
-    action     = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port  = 0
-    to_port    = 0
-  }
+    ingress {
+        protocol   = -1
+        rule_no    = 100
+        action     = "allow"
+        cidr_block = "0.0.0.0/0"
+        from_port  = 0
+        to_port    = 0
+    }
 
-  tags = {
-    Name = "${var.project_name}-${var.environment}-public-nacl"
-  }
+    tags = {
+        Name = "${var.project_name}-${var.environment}-public-nacl"
+    }
 }
 
 ## private1~2
 resource "aws_network_acl" "private1" {
-  vpc_id     = aws_vpc.vpc.id
-  subnet_ids = [aws_subnet.private1.id, aws_subnet.private2.id]
+    vpc_id     = aws_vpc.vpc.id
+    subnet_ids = [aws_subnet.private1.id, aws_subnet.private2.id]
 
-  egress {
-    protocol   = -1
-    rule_no    = 100
-    action     = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port  = 0
-    to_port    = 0
-  }
+    egress {
+        protocol   = -1
+        rule_no    = 100
+        action     = "allow"
+        cidr_block = "0.0.0.0/0"
+        from_port  = 0
+        to_port    = 0
+    }
 
-  ingress {
-    protocol   = -1
-    rule_no    = 100
-    action     = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port  = 0
-    to_port    = 0
-  }
+    ingress {
+        protocol   = -1
+        rule_no    = 100
+        action     = "allow"
+        cidr_block = "0.0.0.0/0"
+        from_port  = 0
+        to_port    = 0
+    }
 
-  tags = {
-    Name = "${var.project_name}-${var.environment}-private1-nacl"
-  }
+    tags = {
+        Name = "${var.project_name}-${var.environment}-private1-nacl"
+    }
 }

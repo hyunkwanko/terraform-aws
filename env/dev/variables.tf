@@ -1,5 +1,5 @@
 # prj
-variable "project_name" { default = "test" } 
+variable "project_name" { default = "k8s" } 
 variable "environment" { default = "dev" }
 
 # VPC
