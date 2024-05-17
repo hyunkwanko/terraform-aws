@@ -7,7 +7,7 @@ resource "aws_instance" "private-ec2" {
     subnet_id = aws_subnet.private1.id
     associate_public_ip_address = false
     key_name = "${var.private_ec2_key_name}"
-    disable_api_termination = true
+    disable_api_termination = false
     root_block_device {
         volume_size = "${var.private_ec2_volume_size}"
         volume_type = "gp3"

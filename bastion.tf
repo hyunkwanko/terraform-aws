@@ -13,7 +13,7 @@ resource "aws_instance" "bastion" {
     iam_instance_profile = aws_iam_instance_profile.bastion.name
     subnet_id = aws_subnet.public1.id
     key_name = "${var.bastion_key_name}"
-    disable_api_termination = true
+    disable_api_termination = false
     root_block_device {
         volume_size = "${var.bastion_volume_size}"
         volume_type = "gp3"
