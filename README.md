@@ -1,6 +1,14 @@
 ## Terraform
 
-### 1. terraform init
-### 2. terraform plan
-### 3. terraform apply
-### 4. terraform destroy
+```
+* terraform init
+* terraform plan
+* terraform apply
+* terraform destroy
+```
+
+```
+// AWS IAM 정보
+$Env:AWS_ACCESS_KEY_ID=""
+$Env:AWS_SECRET_ACCESS_KEY=""
+```

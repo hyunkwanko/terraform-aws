@@ -46,16 +46,16 @@ resource "aws_iam_role" "private_ec2" {
 }
 
 resource "aws_iam_role_policy_attachment" "private_ec2_ssm" {
-  role       = aws_iam_role.private_ec2.name
-  policy_arn = data.aws_iam_policy.systems_manager.arn
+    role       = aws_iam_role.private_ec2.name
+    policy_arn = data.aws_iam_policy.systems_manager.arn
 }
 
 resource "aws_iam_role_policy_attachment" "private_ec2_cloudwatch" {
-  role       = aws_iam_role.private_ec2.name
-  policy_arn = data.aws_iam_policy.cloudwatch_agent.arn
+    role       = aws_iam_role.private_ec2.name
+    policy_arn = data.aws_iam_policy.cloudwatch_agent.arn
 }
 
 resource "aws_iam_instance_profile" "private_ec2" {
-  name = "${var.project_name}-${var.environment}-private_ec2-instanceprofile"
-  role = aws_iam_role.private_ec2.name
+    name = "${var.project_name}-${var.environment}-private_ec2-instanceprofile"
+    role = aws_iam_role.private_ec2.name
 }
