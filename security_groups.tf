@@ -1,15 +1,15 @@
 # Security Group
-# Bastion EC2
-resource "aws_security_group" "bastion_ec2"{
-    name   = "${var.project_name}-${var.environment}-bastion-sg"
+## Public EC2 (Bastion)
+resource "aws_security_group" "public-ec2"{
+    name   = "${var.project_name}-${var.environment}-public-sg"
     vpc_id = aws_vpc.vpc.id
     tags = {
-        Name = "${var.project_name}-${var.environment}-bastion-sg"
+        Name = "${var.project_name}-${var.environment}-public-sg"
     }
 }
 
-# Private EC2
-resource "aws_security_group" "private_ec2"{
+## Private EC2
+resource "aws_security_group" "private-ec2"{
     name   = "${var.project_name}-${var.environment}-private-sg"
     vpc_id = aws_vpc.vpc.id
     tags = {
@@ -27,34 +27,38 @@ resource "aws_security_group" "alb"{
 }
 
 # Ingress Rules
-resource "aws_security_group_rule" "bastion_ec2_ingress_ssh" {
+## public-ec2-ingress-ssh
+resource "aws_security_group_rule" "public-ec2-ingress-ssh" {
     type                     = "ingress"
     from_port                = 22
     to_port                  = 22
     protocol                 = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    security_group_id = aws_security_group.bastion_ec2.id
+    security_group_id = aws_security_group.public-ec2.id
 }
 
-resource "aws_security_group_rule" "private_ec2_ingress_ssh" {
+## private-ec2-ingress-ssh
+resource "aws_security_group_rule" "private-ec2-ingress-ssh" {
     type                     = "ingress"
     from_port                = 22
     to_port                  = 22
     protocol                 = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    security_group_id = aws_security_group.private_ec2.id
+    security_group_id = aws_security_group.private-ec2.id
 }
 
-resource "aws_security_group_rule" "private_ec2_ingress_http" {
+## private-ec2-ingress-http
+resource "aws_security_group_rule" "private-ec2-ingress-http" {
     type                     = "ingress"
     from_port                = 80
     to_port                  = 80
     protocol                 = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    security_group_id = aws_security_group.private_ec2.id
+    security_group_id = aws_security_group.private-ec2.id
 }
 
-resource "aws_security_group_rule" "alb_ingress_http" {
+## alb-ingress-http
+resource "aws_security_group_rule" "alb-ingress-http" {
     type                     = "ingress"
     from_port                = 80
     to_port                  = 80
@@ -64,25 +68,28 @@ resource "aws_security_group_rule" "alb_ingress_http" {
 }
 
 # Egress Rules
-resource "aws_security_group_rule" "bastion_ec2_egress" {
+## alb-ingress-http
+resource "aws_security_group_rule" "public-ec2-egress" {
     type              = "egress"
     from_port         = 0
     to_port           = 0
     protocol          = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-    security_group_id = aws_security_group.bastion_ec2.id
+    security_group_id = aws_security_group.public-ec2.id
 }
 
-resource "aws_security_group_rule" "private_ec2_egress" {
+## private-ec2-egress
+resource "aws_security_group_rule" "private-ec2-egress" {
     type              = "egress"
     from_port         = 0
     to_port           = 0
     protocol          = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-    security_group_id = aws_security_group.private_ec2.id
+    security_group_id = aws_security_group.private-ec2.id
 }
 
-resource "aws_security_group_rule" "alb_ec2_egress" {
+## alb-ec2-egress
+resource "aws_security_group_rule" "alb-ec2-egress" {
     type              = "egress"
     from_port         = 0
     to_port           = 0

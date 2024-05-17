@@ -1,33 +1,33 @@
 # Public Key Fair
-resource "tls_private_key" "bastion_key" {
+resource "tls_private_key" "public-ec2-key" {
     algorithm = "RSA"
     rsa_bits  = 4096
 }
 
-resource "aws_key_pair" "bastion_key_fair" {
-    key_name   = "${var.bastion_key_name}"
-    public_key = tls_private_key.bastion_key.public_key_openssh
+resource "aws_key_pair" "public-ec2-key-fair" {
+    key_name   = "${var.public_ec2_key_name}"
+    public_key = tls_private_key.public-ec2-key.public_key_openssh
 } 
 
-resource "local_file" "bastion_key_fair_local" {
-    filename        = "${var.bastion_key_name}"
-    content         = tls_private_key.bastion_key.private_key_pem
+resource "local_file" "public-ec2-key-fair-local" {
+    filename        = "${var.public_ec2_key_name}"
+    content         = tls_private_key.public-ec2-key.private_key_pem
     file_permission = "0600"
 }
 
 # Private Key Fair
-resource "tls_private_key" "private_ec2_key" {
+resource "tls_private_key" "private-ec2-key" {
     algorithm = "RSA"
     rsa_bits  = 4096
 }
 
-resource "aws_key_pair" "private_ec2_key_fair" {
+resource "aws_key_pair" "private-ec2-key-fair" {
     key_name   = "${var.private_ec2_key_name}"
-    public_key = tls_private_key.private_ec2_key.public_key_openssh
+    public_key = tls_private_key.private-ec2-key.public_key_openssh
 } 
 
-resource "local_file" "private_ec2_key_fair_local" {
+resource "local_file" "private-ec2-key-fair-local" {
     filename        = "${var.private_ec2_key_name}"
-    content         = tls_private_key.private_ec2_key.private_key_pem
+    content         = tls_private_key.private-ec2-key.private_key_pem
     file_permission = "0600"
 }

@@ -1,3 +1,6 @@
+# Local .config files
+*.config*
+
 # Local .pem files
 *.pem
 

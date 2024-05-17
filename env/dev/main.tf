@@ -15,7 +15,7 @@ provider "aws" {
 module "dev" {
     source = "../../"
 
-    # prj
+    # Project
     project_name = var.project_name
     environment = var.environment
 
@@ -26,11 +26,11 @@ module "dev" {
     cidr_private1 = var.cidr_private1
     cidr_private2 = var.cidr_private2
 
-    # Public EC2
-    bastion_ami           = var.bastion_ami
-    bastion_instance_type = var.bastion_instance_type
-    bastion_key_name      = var.bastion_key_name
-    bastion_volume_size   = var.bastion_volume_size
+    # Public EC2 (Bastion)
+    public_ec2_ami           = var.public_ec2_ami
+    public_ec2_instance_type = var.public_ec2_instance_type
+    public_ec2_key_name      = var.public_ec2_key_name
+    public_ec2_volume_size   = var.public_ec2_volume_size
 
     # Private EC2
     private_ec2_ami           = var.private_ec2_ami
