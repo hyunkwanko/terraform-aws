@@ -145,7 +145,6 @@ resource "aws_route" "private-route" {
     destination_cidr_block = "0.0.0.0/0"
 }
 
-
 # NACL
 ## public-nacl
 resource "aws_network_acl" "public-nacl" {

@@ -10,14 +10,14 @@ resource "aws_lb_target_group" "alb-tg" {
 ## alb-tg-attach-1
 resource "aws_lb_target_group_attachment" "alb-tg-attach-1" {
     target_group_arn = aws_lb_target_group.alb-tg.arn
-    target_id        = aws_instance.private-ec2-1.id
+    target_id        = aws_instance.private-ec2-a-1.id
     port             = 80
 }
 
 ## alb-tg-attach-2
 resource "aws_lb_target_group_attachment" "alb-tg-attach-2" {
     target_group_arn = aws_lb_target_group.alb-tg.arn
-    target_id        = aws_instance.private-ec2-2.id
+    target_id        = aws_instance.private-ec2-c-1.id
     port             = 80
 }
 
