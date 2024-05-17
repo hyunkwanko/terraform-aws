@@ -25,7 +25,7 @@ resource "aws_nat_gateway" "nat_gateway" {
     depends_on    = [aws_internet_gateway.igw]
 
     tags = {
-        Name = "${var.project_name}-${var.environment}-natgw1"
+        Name = "${var.project_name}-${var.environment}-nat-gw"
     }
 }
 
@@ -34,7 +34,7 @@ resource "aws_eip" "nat_gateway" {
     depends_on = [aws_internet_gateway.igw]
 
     tags = {
-        Name = "${var.project_name}-${var.environment}-natgw1-eip"
+        Name = "${var.project_name}-${var.environment}-nat-gw-eip"
     }
 }
 
