@@ -51,6 +51,18 @@ resource "aws_subnet" "public-subnet-1" {
     }
 }
 
+## public-subnet-2
+resource "aws_subnet" "public-subnet-2" {
+    vpc_id                  = aws_vpc.vpc.id
+    availability_zone       = "ap-northeast-2c"
+    cidr_block              = "${var.cidr_public2}"
+    map_public_ip_on_launch = true
+
+    tags = {
+        Name = "${var.project_name}-${var.environment}-public-subnet-2"
+    }
+}
+
 ## private-subnet-1
 resource "aws_subnet" "private-subnet-1" {
     vpc_id                  = aws_vpc.vpc.id
@@ -62,6 +74,19 @@ resource "aws_subnet" "private-subnet-1" {
         Name = "${var.project_name}-${var.environment}-private-subnet-1"
     }
 }
+
+## private-subnet-2
+resource "aws_subnet" "private-subnet-2" {
+    vpc_id                  = aws_vpc.vpc.id
+    availability_zone       = "ap-northeast-2c"
+    cidr_block              = "${var.cidr_private2}"
+    map_public_ip_on_launch = false
+
+    tags = {
+        Name = "${var.project_name}-${var.environment}-private-subnet-2"
+    }
+}
+
 
 # Route table
 ## public-rt
@@ -76,6 +101,12 @@ resource "aws_route_table" "public-rt" {
 ## public-rt-association-1
 resource "aws_route_table_association" "public-rt-association-1" {
     subnet_id      = aws_subnet.public-subnet-1.id
+    route_table_id = aws_route_table.public-rt.id
+}
+
+## public-rt-association-2
+resource "aws_route_table_association" "public-rt-association-2" {
+    subnet_id      = aws_subnet.public-subnet-2.id
     route_table_id = aws_route_table.public-rt.id
 }
 
@@ -101,6 +132,12 @@ resource "aws_route_table_association" "private-rt-association-1" {
     route_table_id = aws_route_table.private-rt.id
 }
 
+## private-rt-association-2
+resource "aws_route_table_association" "private-rt-association-2" {
+    subnet_id      = aws_subnet.private-subnet-2.id
+    route_table_id = aws_route_table.private-rt.id
+}
+
 ## private-route
 resource "aws_route" "private-route" {
     route_table_id         = aws_route_table.private-rt.id
@@ -112,7 +149,7 @@ resource "aws_route" "private-route" {
 ## public-nacl
 resource "aws_network_acl" "public-nacl" {
     vpc_id     = aws_vpc.vpc.id
-    subnet_ids = [aws_subnet.public-subnet-1.id]
+    subnet_ids = [aws_subnet.public-subnet-1.id, aws_subnet.private-subnet-2.id]
 
     egress {
         protocol   = -1
@@ -140,7 +177,7 @@ resource "aws_network_acl" "public-nacl" {
 ## private-nacl
 resource "aws_network_acl" "private-nacl" {
     vpc_id     = aws_vpc.vpc.id
-    subnet_ids = [aws_subnet.private-subnet-1.id]
+    subnet_ids = [aws_subnet.private-subnet-1.id, aws_subnet.private-subnet-2.id]
 
     egress {
         protocol   = -1
