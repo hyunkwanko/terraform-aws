@@ -1,6 +1,6 @@
 # Project
 variable "project_name" { default = "k8s" } 
-variable "environment" { default = "dev" }
+variable "environment" { default = "cbt" }
 
 # VPC
 variable "cidr_vpc"        { default = "10.0.0.0/16"}
