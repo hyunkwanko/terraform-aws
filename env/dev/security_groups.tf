@@ -37,11 +37,61 @@ resource "aws_security_group_rule" "public-ec2-ingress-ssh" {
     security_group_id = aws_security_group.public-ec2.id
 }
 
+# ## public-ec2-ingress-9345
+# resource "aws_security_group_rule" "public-ec2-ingress-9345" {
+#     type                     = "ingress"
+#     from_port                = 9345
+#     to_port                  = 9345
+#     protocol                 = "tcp"
+#     cidr_blocks = ["0.0.0.0/0"]
+#     security_group_id = aws_security_group.public-ec2.id
+# }
+
+# ## public-ec2-ingress-6443
+# resource "aws_security_group_rule" "public-ec2-ingress-6443" {
+#     type                     = "ingress"
+#     from_port                = 6443
+#     to_port                  = 6443
+#     protocol                 = "tcp"
+#     cidr_blocks = ["0.0.0.0/0"]
+#     security_group_id = aws_security_group.public-ec2.id
+# }
+
+# ## public-ec2-ingress-http
+# resource "aws_security_group_rule" "public-ec2-ingress-http" {
+#     type                     = "ingress"
+#     from_port                = 80
+#     to_port                  = 80
+#     protocol                 = "tcp"
+#     cidr_blocks = ["0.0.0.0/0"]
+#     security_group_id = aws_security_group.public-ec2.id
+# }
+
 ## private-ec2-ingress-ssh
 resource "aws_security_group_rule" "private-ec2-ingress-ssh" {
     type                     = "ingress"
     from_port                = 22
     to_port                  = 22
+    protocol                 = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.private-ec2.id
+}
+
+## private-ec2-ingress-9345
+resource "aws_security_group_rule" "private-ec2-ingress-9345" {
+    type                     = "ingress"
+    from_port                = 9345
+    to_port                  = 9345
+    protocol                 = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.private-ec2.id
+}
+
+## private-ec2-ingress-6443
+resource "aws_security_group_rule" "private-ec2-ingress-6443" {
+    type                     = "ingress"
+    from_port                = 6443
+    to_port                  = 6443
     protocol                 = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     security_group_id = aws_security_group.private-ec2.id
