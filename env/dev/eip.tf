@@ -10,7 +10,7 @@ resource "aws_eip" "public-ec2-bastion-eip" {
 
 ## Public EC2 (Master)
 resource "aws_eip" "public-ec2-master-eip-1" {
-    instance = aws_instance.public-ec2-bastion.id
+    instance = aws_instance.public-ec2-master-1.id
     
     tags = {
         Name = "${var.project_name}-${var.environment}-master-eip-1"
