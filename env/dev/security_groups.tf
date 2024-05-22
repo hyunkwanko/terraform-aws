@@ -77,6 +77,26 @@ resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingres
     security_group_id = aws_security_group.public-ec2-master-security-group.id
 }
 
+## Public EC2 (Master) - Ingress Rules - 443 (Https)
+resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingress-80" {
+    type                     = "ingress"
+    from_port                = 443
+    to_port                  = 443
+    protocol                 = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.public-ec2-master-security-group.id
+}
+
+## Public EC2 (Master) - Ingress Rules - ICMP
+resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingress-80" {
+    type                     = "ingress"
+    from_port                = -1
+    to_port                  = -1
+    protocol                 = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.public-ec2-master-security-group.id
+}
+
 ## Prviate EC2 (Worker) - Ingress Rules - 22 (SSH)
 resource "aws_security_group_rule" "private-ec2-worker-security-group-rule-ingress-22" {
     type                     = "ingress"
