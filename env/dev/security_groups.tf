@@ -78,7 +78,7 @@ resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingres
 }
 
 ## Public EC2 (Master) - Ingress Rules - 443 (Https)
-resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingress-80" {
+resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingress-443" {
     type                     = "ingress"
     from_port                = 443
     to_port                  = 443
@@ -88,7 +88,7 @@ resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingres
 }
 
 ## Public EC2 (Master) - Ingress Rules - ICMP
-resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingress-80" {
+resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingress-icmp" {
     type                     = "ingress"
     from_port                = -1
     to_port                  = -1
