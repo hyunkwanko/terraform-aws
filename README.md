@@ -2,8 +2,9 @@
 
 K8s Cluster 구축
 - AWS Infra Provisioning (Terraform)
+- [블로그](https://taronko.tistory.com/45)
 
-![architecture_2](https://github.com/hyunkwanko/terraform-aws/assets/39941580/271061f8-d948-419b-9b52-4eed68cf6877)
+![Slide2](https://github.com/hyunkwanko/terraform-aws/assets/39941580/a124fdfc-e134-49d9-8d84-049a4e7f77d7)
 
 ```
 // 기본 명령어
