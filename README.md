@@ -30,5 +30,5 @@ $Env:TF_LOG_PATH="tmp/terraform.log"
 // ssh 접속
 vi key.pem
 sudo chmod 600 key.pem
-ssh -i key.pem ubuntu@{ip}
+ssh -i key.pem ubuntu@{Worker Node Internal IP}
 ```

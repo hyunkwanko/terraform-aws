@@ -47,7 +47,7 @@ resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingres
     security_group_id = aws_security_group.public-ec2-master-security-group.id
 }
 
-## Public EC2 (Master) - Ingress Rules - 9345
+## Public EC2 (Master) - Ingress Rules - RKE2 server and agent nodes (Node registration. Port should be open on all server nodes to all other nodes in the cluster.)
 resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingress-9345" {
     type                     = "ingress"
     from_port                = 9345
@@ -57,11 +57,61 @@ resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingres
     security_group_id = aws_security_group.public-ec2-master-security-group.id
 }
 
-## Public EC2 (Master) - Ingress Rules - 6443
+## Public EC2 (Master) - Ingress Rules - RKE2 agent nodes (Kubernetes API)
 resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingress-6443" {
     type                     = "ingress"
     from_port                = 6443
     to_port                  = 6443
+    protocol                 = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.public-ec2-master-security-group.id
+}
+
+## Public EC2 (Master) - Ingress Rules - RKE2 server and agent nodes (Required only for Flannel VXLAN)
+resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingress-8472" {
+    type                     = "ingress"
+    from_port                = 8472
+    to_port                  = 8472
+    protocol                 = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.public-ec2-master-security-group.id
+}
+
+## Public EC2 (Master) - Ingress Rules - RKE2 server and agent nodes (kubelet)
+resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingress-10250" {
+    type                     = "ingress"
+    from_port                = 10250
+    to_port                  = 10250
+    protocol                 = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.public-ec2-master-security-group.id
+}
+
+## Public EC2 (Master) - Ingress Rules - RKE2 server nodes (etcd client port)
+resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingress-2379" {
+    type                     = "ingress"
+    from_port                = 2379
+    to_port                  = 2379
+    protocol                 = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.public-ec2-master-security-group.id
+}
+
+## Public EC2 (Master) - Ingress Rules - RKE2 server nodes (etcd peer port)
+resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingress-2380" {
+    type                     = "ingress"
+    from_port                = 2380
+    to_port                  = 2380
+    protocol                 = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.public-ec2-master-security-group.id
+}
+
+## Public EC2 (Master) - Ingress Rules - Calico-node pod connecting to typha pod (Required when deploying with Calico)
+resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingress-5473" {
+    type                     = "ingress"
+    from_port                = 5473
+    to_port                  = 5473
     protocol                 = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     security_group_id = aws_security_group.public-ec2-master-security-group.id
@@ -102,6 +152,56 @@ resource "aws_security_group_rule" "private-ec2-worker-security-group-rule-ingre
     type                     = "ingress"
     from_port                = 22
     to_port                  = 22
+    protocol                 = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.private-ec2-worker-security-group.id
+}
+
+## Prviate EC2 (Worker) - Ingress Rules - RKE2 server and agent nodes (Node registration. Port should be open on all server nodes to all other nodes in the cluster.)
+resource "aws_security_group_rule" "private-ec2-worker-security-group-rule-ingress-9345" {
+    type                     = "ingress"
+    from_port                = 9345
+    to_port                  = 9345
+    protocol                 = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.private-ec2-worker-security-group.id
+}
+
+## Prviate EC2 (Worker) - Ingress Rules - RKE2 agent nodes (Kubernetes API)
+resource "aws_security_group_rule" "private-ec2-worker-security-group-rule-ingress-6443" {
+    type                     = "ingress"
+    from_port                = 6443
+    to_port                  = 6443
+    protocol                 = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.private-ec2-worker-security-group.id
+}
+
+## Prviate EC2 (Worker) - Ingress Rules - RKE2 server and agent nodes (Required only for Flannel VXLAN)
+resource "aws_security_group_rule" "private-ec2-worker-security-group-rule-ingress-8472" {
+    type                     = "ingress"
+    from_port                = 8472
+    to_port                  = 8472
+    protocol                 = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.private-ec2-worker-security-group.id
+}
+
+## Prviate EC2 (Worker) - Ingress Rules - RKE2 server and agent nodes (kubelet)
+resource "aws_security_group_rule" "private-ec2-worker-security-group-rule-ingress-10250" {
+    type                     = "ingress"
+    from_port                = 10250
+    to_port                  = 10250
+    protocol                 = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.private-ec2-worker-security-group.id
+}
+
+## Prviate EC2 (Worker) - Ingress Rules - Calico-node pod connecting to typha pod (Required when deploying with Calico)
+resource "aws_security_group_rule" "private-ec2-worker-security-group-rule-ingress-5473" {
+    type                     = "ingress"
+    from_port                = 5473
+    to_port                  = 5473
     protocol                 = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     security_group_id = aws_security_group.private-ec2-worker-security-group.id
