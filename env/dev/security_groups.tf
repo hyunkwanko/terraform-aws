@@ -37,6 +37,16 @@ resource "aws_security_group_rule" "public-ec2-bastion-security-group-rule-ingre
     security_group_id = aws_security_group.public-ec2-bastion-security-group.id
 }
 
+## Public EC2 (Bastion) - Ingress Rules - 3000 (Gitea)
+resource "aws_security_group_rule" "public-ec2-bastion-security-group-rule-ingress-3000" {
+    type                     = "ingress"
+    from_port                = 3000
+    to_port                  = 3000
+    protocol                 = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.public-ec2-bastion-security-group.id
+}
+
 ## Public EC2 (Master) - Ingress Rules - 22 (SSH)
 resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingress-22" {
     type                     = "ingress"
