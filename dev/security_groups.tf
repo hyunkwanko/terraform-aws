@@ -37,6 +37,16 @@ resource "aws_security_group_rule" "public-ec2-bastion-security-group-rule-ingre
     security_group_id = aws_security_group.public-ec2-bastion-security-group.id
 }
 
+## Public EC2 (Bastion) - Ingress Rules - 443 (Https)
+resource "aws_security_group_rule" "public-ec2-bastion-security-group-rule-ingress-443" {
+    type                     = "ingress"
+    from_port                = 443
+    to_port                  = 443
+    protocol                 = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.public-ec2-bastion-security-group.id
+}
+
 ## Public EC2 (Bastion) - Ingress Rules - 3000 (Gitea)
 resource "aws_security_group_rule" "public-ec2-bastion-security-group-rule-ingress-3000" {
     type                     = "ingress"
@@ -47,11 +57,21 @@ resource "aws_security_group_rule" "public-ec2-bastion-security-group-rule-ingre
     security_group_id = aws_security_group.public-ec2-bastion-security-group.id
 }
 
-## Public EC2 (Bastion) - Ingress Rules - 443 (Https)
-resource "aws_security_group_rule" "public-ec2-bastion-security-group-rule-ingress-443" {
+## Public EC2 (Bastion) - Ingress Rules - 5000 (Nexus)
+resource "aws_security_group_rule" "public-ec2-bastion-security-group-rule-ingress-5000" {
     type                     = "ingress"
-    from_port                = 443
-    to_port                  = 443
+    from_port                = 5000
+    to_port                  = 5000
+    protocol                 = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.public-ec2-bastion-security-group.id
+}
+
+## Public EC2 (Bastion) - Ingress Rules - 8081 (Nexus)
+resource "aws_security_group_rule" "public-ec2-bastion-security-group-rule-ingress-8081" {
+    type                     = "ingress"
+    from_port                = 8081
+    to_port                  = 8081
     protocol                 = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     security_group_id = aws_security_group.public-ec2-bastion-security-group.id

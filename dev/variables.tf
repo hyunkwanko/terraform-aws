@@ -13,7 +13,7 @@ variable "cidr_private_2"   { default = "10.0.11.0/24" }
 variable "public_ec2_bastion_ami"            { default = "ami-01ed8ade75d4eee2f" }
 variable "public_ec2_bastion_instance_type"  { default = "t2.medium" }
 variable "public_ec2_bastion_key_name"       { default = "public-ec2-bastion-key.pem" }
-variable "public_ec2_bastion_volume_size"   { default = 8 }
+variable "public_ec2_bastion_volume_size"   { default = 16 }
 
 # Public EC2 (Master)
 variable "public_ec2_master_ami"            { default = "ami-01ed8ade75d4eee2f" }
