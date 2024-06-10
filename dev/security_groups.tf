@@ -37,6 +37,16 @@ resource "aws_security_group_rule" "public-ec2-bastion-security-group-rule-ingre
     security_group_id = aws_security_group.public-ec2-bastion-security-group.id
 }
 
+## Public EC2 (Bastion) - Ingress Rules - 80 (Http)
+resource "aws_security_group_rule" "public-ec2-bastion-security-group-rule-ingress-80" {
+    type                     = "ingress"
+    from_port                = 80
+    to_port                  = 80
+    protocol                 = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.public-ec2-bastion-security-group.id
+}
+
 ## Public EC2 (Bastion) - Ingress Rules - 443 (Https)
 resource "aws_security_group_rule" "public-ec2-bastion-security-group-rule-ingress-443" {
     type                     = "ingress"
