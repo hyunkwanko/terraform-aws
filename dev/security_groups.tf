@@ -87,6 +87,16 @@ resource "aws_security_group_rule" "public-ec2-bastion-security-group-rule-ingre
     security_group_id = aws_security_group.public-ec2-bastion-security-group.id
 }
 
+## Public EC2 (Bastion) - Ingress Rules - 9000 (Sonarqube)
+resource "aws_security_group_rule" "public-ec2-bastion-security-group-rule-ingress-9000" {
+    type                     = "ingress"
+    from_port                = 9000
+    to_port                  = 9000
+    protocol                 = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    security_group_id = aws_security_group.public-ec2-bastion-security-group.id
+}
+
 ## Public EC2 (Master) - Ingress Rules - 22 (SSH)
 resource "aws_security_group_rule" "public-ec2-master-security-group-rule-ingress-22" {
     type                     = "ingress"
