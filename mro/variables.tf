@@ -1,6 +1,6 @@
 # Project
 variable "project_name" { default = "mro" } 
-variable "environment" { default = "prod" }
+variable "environment" { default = "product" }
 
 # VPC
 variable "cidr_vpc"        { default = "10.0.0.0/16"}
